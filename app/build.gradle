@@ -31,7 +31,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'org.litepal.android:core:1.6.0'//数据库操作
     //compile 'com.squareip.okhttp3:okhttp:3.4.1'//http网络请求
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
-    //compile 'org.google.code.gosn:gson:2.7'//json数据解析
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'//http网络请求
+    compile 'com.google.code.gson:gson:2.8.2'//json数据解析
     //compile 'org.github.bumptech.glide:glide:3.7.0'//加载和显示图片
 }

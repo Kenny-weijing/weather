@@ -43,8 +43,8 @@ public class ChooseAreaFragment extends Fragment{
     private ProgressDialog progressDialog;
 
     private TextView textView;
-    private  Button btnBack;
-    private  ListView listView;
+    private Button btnBack;
+    private ListView listView;
     private ArrayAdapter<String> adapterArray;
     private List<String> dataList = new ArrayList<>();
 
@@ -52,8 +52,8 @@ public class ChooseAreaFragment extends Fragment{
     private List<City> cityList;
     private List<County> countyList;
 
-    private  Province selProvice;
-    private  City selCity;
+    private Province selProvice;
+    private City selCity;
     private int selLevel;
 
     @Override
@@ -94,12 +94,12 @@ public class ChooseAreaFragment extends Fragment{
             if (selLevel== LEVEL_COUNTY){
                 queryCities();
             }else if (selLevel== LEVEL_CITY){
-                queryProvices();
+                queryProvinces();
             }
         }
     };
 
-    private void queryProvices(){
+    private void queryProvinces(){
         textView.setText("中国省市");
         btnBack.setVisibility(View.GONE);
         provinceList = DataSupport.findAll(Province.class);
@@ -173,7 +173,7 @@ public class ChooseAreaFragment extends Fragment{
                 boolean result = false;
                 switch (type)
                 {
-                    case "provice":
+                    case "province":
                         result = Utility.handleProviceResponse(resJson);
                         break;
                     case "city":
@@ -183,7 +183,7 @@ public class ChooseAreaFragment extends Fragment{
                         result = Utility.handleCountyResponse(resJson,selCity.getId());
                         break;
                 }
-                if ("provice".equals(type)){
+                if ("province".equals(type)){
                     result = Utility.handleProviceResponse(resJson);
                 } else if ("city".equals(type)){
                     result = Utility.handleCityResponse(resJson,selProvice.getId());
@@ -195,8 +195,8 @@ public class ChooseAreaFragment extends Fragment{
                         @Override
                         public void run() {
                             closeProgressDialog();
-                            if ("provice".equals(type)){
-                                queryProvices();
+                            if ("province".equals(type)){
+                                queryProvinces();
                             }  else if ("city".equals(type)){
                                 queryCities();
                             } else if ("county".equals(type)){
