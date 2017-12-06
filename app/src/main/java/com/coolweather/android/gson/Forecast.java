@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Forecast {
 
+    public String data;
     @SerializedName("tmp")
     public Temperature temperature;
 

@@ -6,6 +6,8 @@ import android.util.Log;
 import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
+import com.coolweather.android.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +17,7 @@ import org.json.JSONObject;
  */
 
 public class Utility {
-    public static  boolean  handleProviceResponse(String response){
+    public static boolean handleProviceResponse(String response){
         try {
             if (TextUtils.isEmpty(response))
                 return false;
@@ -35,7 +37,7 @@ public class Utility {
         }
         return false;
     }
-    public static  boolean  handleCityResponse(String response,int proviceId){
+    public static boolean handleCityResponse(String response,int proviceId){
         try {
             if (TextUtils.isEmpty(response))
                 return false;
@@ -56,7 +58,7 @@ public class Utility {
         }
         return false;
     }
-    public static  boolean  handleCountyResponse(String response,int cityId){
+    public static boolean handleCountyResponse(String response,int cityId){
         try {
             if (TextUtils.isEmpty(response))
                 return false;
@@ -66,7 +68,7 @@ public class Utility {
                 JSONObject countyObj = countyArray.getJSONObject(i);
                 County county = new County();
                 county.setCountyName(countyObj.getString("name"));
-                county.setWeatherId(countyObj.getInt("id"));
+                county.setWeatherId(countyObj.getString("weather_id"));
                 county.setCityId(cityId);
                 county.save();
             }
@@ -76,5 +78,20 @@ public class Utility {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    public static Weather handleWeatherReaponse(String response)
+    {
+        try {
+            JSONObject mainObj = new JSONObject(response);
+            JSONArray weatherArray = mainObj.getJSONArray("HeWeather");
+            String weather  = weatherArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weather,Weather.class);
+        }
+        catch (Exception ex){
+            Log.e("Utility","handleWeatherReaponse Error:"+ex.getMessage());
+            ex.printStackTrace();
+            return null;
+        }
     }
 }
