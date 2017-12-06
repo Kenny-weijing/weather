@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion '27.0.1'
+
+    aaptOptions {
+         cruncherEnabled = false
+         useNewCruncher = false
+     }
+
     defaultConfig {
         applicationId "com.coolweather.android"
         minSdkVersion 23
