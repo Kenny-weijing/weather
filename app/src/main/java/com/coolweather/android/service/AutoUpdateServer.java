@@ -31,6 +31,7 @@ public class AutoUpdateServer extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //public int OnStartCommand(Intent intent, int flags, int startId) {
         updateWeather();
+        updateBingPic();
         //定时任务
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         int updateInterval = 8*24*60*60*1000;
@@ -46,7 +47,7 @@ public class AutoUpdateServer extends Service {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);
         if (weatherString!=null) {
-            Weather weather = Utility.handleWeatherReaponse(weatherString);
+            Weather weather = Utility.handleWeatherResponse(weatherString);
             String weatherId = weather.basic.weatherId;
             String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=72c4d6872dd14a80bf92612286ee5236";
             //显示天气
@@ -58,7 +59,7 @@ public class AutoUpdateServer extends Service {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String resJson = response.body().string();
-                    final Weather weather = Utility.handleWeatherReaponse(resJson);
+                    final Weather weather = Utility.handleWeatherResponse(resJson);
                     SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateServer.this).edit();
                     editor.putString("weather",resJson);
                     editor.apply();
